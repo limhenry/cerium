@@ -11,5 +11,5 @@ gulp.task('serve', function(){
          }
      });
 
-     gulp.watch("**").on("change", reload);
+     gulp.watch(["public/*","public/data/*", "public/src/*"]).on("change", reload);
 });
