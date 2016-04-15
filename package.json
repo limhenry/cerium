@@ -1,0 +1,24 @@
+{
+  "name": "cerium",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/limhenry/cerium.git"
+  },
+  "author": "limhenry <henrylim.everything@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/limhenry/cerium/issues"
+  },
+  "homepage": "https://github.com/limhenry/cerium#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.12.3",
+    "gulp": "^3.9.1"
+  }
+}
