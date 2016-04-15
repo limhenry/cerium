@@ -1,0 +1,17 @@
+node_modules
+bower_components
+public/bower_components
+public/images_raw
+[0-9.]*/components
+[0-9.]*/samples/components
+polymer-all
+_site
+.DS_Store
+*.pyc
+.sass-cache
+*.vulcanized.html
+*.vulcanized.js
+*.sublime-*
+_data/versions
+.bundle
+summit/dist

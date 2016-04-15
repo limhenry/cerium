@@ -1,0 +1,98 @@
+<dom-module id="footer-page">
+    <template>
+        <style>
+        :host {
+            display: block;
+            max-width: 100%;
+        }
+        
+        footer {
+            background: rgba(236, 239, 241, 0.4);
+        }
+        
+        #footer-contain {
+            padding: 36px 0;
+            margin: 0 auto;
+            margin-top: 56px;
+            width: 80%;
+            max-width: 1400px;
+        }
+        
+        #footer-contain p {
+            color: rgba(0, 0, 0, 0.7);
+            font-weight: 300;
+            margin-left: 24px;
+        }
+        
+        #footer-contain a {
+            text-decoration: none;
+            font-weight: 400;
+            color: #1976D2;
+        }
+        
+        #footer-gdg {
+            height: 96px;
+        }
+        
+        #hashtag {
+            max-width: 500px;
+            margin: 48px auto 24px auto;
+            width: 50%;
+            display: block;
+        }
+        
+        @media screen and (max-width: 840px) {
+            #hashtag {
+                width: 80%;
+            }
+            #footer-contain {
+                padding: 36px 0;
+                width: 100%;
+            }
+            #footer-gdg {
+                height: 96px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            #footer-gdg {
+                height: auto;
+                width: 65%;
+                margin-left: 12px;
+                margin-bottom: -24px;
+            }
+            #hashtag {
+                width: 100%;
+                margin: 24px auto;
+            }
+            #footer-contain {
+                padding: 12px 0;
+                margin-top: 24px;
+            }
+        }
+        </style>
+        <iron-ajax auto url="/data/page_data.json" handle-as="json" last-response="{{handleResponse}}"></iron-ajax>
+        <footer>
+            <div id="footer-contain">
+                <a href="{{pagecontents.organization_url}}" target="_blank"><img src="{{pagecontents.organization_image}}" id="footer-gdg"></a>
+                <p>© 2016 Based on <a href="https://github.com/limhenry" target="_blank">Project Cerium</a> by <a href="https://limhenry.xyz" target="_blank">Henry Lim</a>.</p>
+                <p>Designed and created by <a href="{{pagecontents.author_url}}" target="_blank">{{pagecontents.author_name}}</a> <b>&#183;</b> {{pagecontents.organization_name}}</p>
+            </div>
+        </footer>
+    </template>
+    <script>
+    Polymer({
+        is: 'footer-page',
+        properties: {
+            handleResponse: {
+                type: Object,
+                notify: true,
+                observer: '_handleResponse'
+            }        	
+        },
+        _handleResponse: function() {
+            this.pagecontents = this.handleResponse[0].footer;
+        },
+    });
+    </script>
+</dom-module>

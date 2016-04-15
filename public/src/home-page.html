@@ -1,0 +1,273 @@
+<dom-module id="home-page">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        .darkblue {
+            --paper-card-background-color: var(--custom-primary-color);
+        }
+        
+        .white {
+            --paper-card-background-color: #fff;
+        }
+        
+        .bluegrey {
+            --paper-card-background-color: rgba(236, 239, 241, 0.4);
+        }
+        
+        .no-shadow {
+            @apply(--shadow-elevation-0dp)
+        }
+        
+        #cover {
+            max-width: 100%;
+            height: 400px;
+            margin: 0px auto 24px auto;
+            display: block;
+        }
+        
+        paper-card {
+            max-width: 1600px;
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+            --paper-card-content: {
+                padding: 48px 60px;
+            }
+        }
+        
+        #event-detail {
+            color: var(--custom-primary-text-color);
+            font-size: 24px;
+            margin-bottom: 68px;
+            line-height: 32px;
+            font-weight: 400;
+        }
+        
+        #event-detail p {
+            margin: 4px;
+        }
+        
+        #event-desc {
+            color: var(--custom-secondary-text-color);
+            font-size: 20px;
+            line-height: 28px;
+        }
+        
+        #get-ticket {
+            color: rgba(0, 0, 0, 0.9);
+            font-size: 20px;
+            line-height: 32px;
+            font-weight: 400;
+            text-align: center;
+        }
+        
+        #get-ticket paper-button {
+            background: var(--custom-secondary-color);
+            color: var(--custom-invert-text-color);
+            margin-bottom: 16px;
+        }
+        
+        google-map {
+            max-width: 1600px;
+            height: 360px;
+            width: 80%;
+            margin: 0 auto;
+        }
+        
+        #venue_img {
+            margin: 0 auto;
+            width: 80%;
+            display: block;
+        }
+        
+        #main-sponsor {
+            height: 84px;
+            margin: 12px 12px 24px 12px;
+        }
+        
+        #sponsor {
+            height: 56px;
+            margin: 16px 24px;
+        }
+        
+        #sponsor-div {
+            color: rgba(0, 0, 0, 0.5);
+            font-size: 24px;
+            line-height: 32px;
+            font-weight: 500;
+            text-align: center;
+            max-width: 1600px;
+            width: 80%;
+            margin: 64px auto 36px auto;
+            display: block;
+        }
+        
+        @media screen and (max-width: 840px) {
+            #main-sponsor {
+                margin: 0 auto;
+                width: auto;
+                height: 102px;
+                display: block;
+            }
+            #sponsor {
+                height: 62px;
+                display: block;
+                margin: 36px auto;
+            }
+            paper-card {
+                width: 100%;
+            }
+            google-map {
+                width: 100%;
+            }
+            #cover {
+                height: 280px;
+            }
+            #event-detail {
+                font-size: 22px;
+            }
+            #event-desc {
+                font-size: 18px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            #main-sponsor {
+                margin: 0 auto;
+                height: auto;
+                width: 100%;
+                display: block;
+            }
+            #sponsor {
+                width: 50%;
+                height: auto;
+                display: block;
+                margin: 36px auto;
+            }
+            paper-card {
+                --paper-card-content: {
+                    padding: 24px 30px;
+                }
+                ;
+            }
+            #event-detail {
+                margin-bottom: 32px;
+            }
+            #cover {
+                margin-top: 0;
+            }
+        }
+        </style>
+        <div id="homePage">
+            <iron-media-query query="(min-width: 480px)" query-matches="{{cover_wide}}"></iron-media-query>
+            <template is="dom-if" if="{{!cover_wide}}">
+                <div id="cover" style="background:url({{pageContent.event_cover_picture_mobile}});background-size: contain;background-repeat: no-repeat;background-position: center;"></div>
+            </template>
+            <template is="dom-if" if="{{cover_wide}}">
+                <div id="cover" style="background:url({{pageContent.event_cover_picture_desktop}});background-size: contain;background-repeat: no-repeat;background-position: center;"></div>
+            </template>
+            <paper-card animated-shadow class="darkblue shadowElevation">
+                <div class="card-content">
+                    <div id="event-detail">
+                        <p>{{pageContent.time}}</p>
+                        <p>{{pageContent.location}}</p>
+                    </div>
+                    <div id="event-desc">
+                        <p>{{pageContent.description}}</p>
+                    </div>
+                </div>
+            </paper-card>
+            <google-map id="googleMap" latitude="{{pageContent.venue_map_latitude}}" longitude="{{pageContent.venue_map_longitude}}" zoom="16" disable-zoom fit-To-Markers disable-Default-Ui drag-Events="false">
+                <google-map-marker latitude="{{pageContent.venue_pointer_latitude}}" longitude="{{pageContent.venue_pointer_longitude}}">
+                </google-map-marker>
+            </google-map>
+            <paper-card animated-shadow class="bluegrey shadowElevation">
+                <div class="card-content">
+                    <div id="get-ticket">
+                        <p>Get your ticket now on Peatix</p>
+                        <a href="{{pageContent.peatix_event_url}}" target="_blank">
+                            <paper-button raised>Book Now</paper-button>
+                        </a>
+                    </div>
+                </div>
+            </paper-card>
+            <div id="sponsor-div">
+                <p>Organized By</p>
+                <img src="{{pageContent.sponsor}}" id="main-sponsor">
+                <p>Made Possible With</p>
+                <template is="dom-repeat" items="{{pageContent.co-sponsor}}">
+                    <img src="{{item.sponsor_image}}" id="sponsor">
+                </template>
+            </div>
+            <footer-page></footer-page>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'home-page',
+
+        behaviors: [
+            Polymer.NeonAnimatableBehavior,
+            Polymer.NeonAnimationRunnerBehavior
+        ],
+
+        properties: {
+
+            pageContent: Object,
+
+            animationConfig: {
+                value: function() {
+                    return {
+                        'entry': [{
+                            name: 'fade-in-animation',
+                            node: this,
+                            timing: {
+                                delay: 400,
+                                duration: 500
+                            }
+                        }, {
+                            name: 'transform-animation',
+                            node: this.$.homePage,
+                            transformOrigin: '100%',
+                            transformFrom: 'translateY(30%)',
+                            transformTo: 'translateY(0%)',
+                            timing: {
+                                delay: 200,
+                                duration: 800
+                            }
+                        }],
+                        'exit': [{
+                            name: 'fade-out-animation',
+                            node: this,
+                            timing: {
+                                delay: 100,
+                                duration: 500
+                            }
+                        }, {
+                            name: 'transform-animation',
+                            node: this.$.homePage,
+                            transformOrigin: '100%',
+                            transformFrom: 'translateY(0%)',
+                            transformTo: 'translateY(30%)',
+                            timing: {
+                                delay: 100,
+                                duration: 800
+                            }
+                        }],
+                    }
+                }
+            },
+        },
+
+
+
+        ready: function() {
+            this.playAnimation('entry');
+        }
+
+    });
+    </script>
+</dom-module>

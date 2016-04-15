@@ -1,0 +1,191 @@
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="app-page">
+    <template>
+        <style>
+        :host {
+            display: block;
+            
+            --paper-tab-ink: #5c6bc0;
+            --custom-primary-color: #4DD0E1;
+            --custom-secondary-color: #5c6bc0;
+            --custom-primary-text-color: rgba(0,0,0,1);
+            --custom-secondary-text-color: rgba(0,0,0,0.9);
+            --custom-invert-text-color: rgba(255,255,255,0.9);
+        }
+        
+        paper-tabs {
+            margin-right: 24px;
+            --paper-tabs-selection-bar-color: var(--custom-secondary-color);
+            height: 64px;
+        }
+        
+        paper-tab {
+            color: var(--custom-secondary-color);
+            font-weight: 500;
+        }
+        
+        app-header {
+            background-color: white;
+            --app-header-background-rear-layer: {
+                background-color: #FAFAFA;
+            }
+        }
+        
+        .gcp-logo {
+            display: inline-block;
+            height: 40px;
+            width: 60px;
+            transition: opacity 200ms ease-in-out;
+            will-change: opacity;
+        }
+        
+        .drawer-text {
+            font-size: 14px;
+            line-height: 20px;
+            color: white;
+            font-weight: 500;
+        }
+        
+        paper-toolbar {
+            background: var(--custom-primary-color);
+            margin-bottom: 8px;
+        }
+        
+        paper-item {
+            font-size: 14px;
+            color: var(--custom-primary-color);
+            font-weight: 500;
+            --paper-item-selected-weight: 500;
+            --paper-item-selected: {
+                background: #eceff1;
+            }
+        }
+        
+        #gcp-toolbar {
+            background-size: contain;
+            cursor: pointer;
+            height: 58px;
+            margin-left: 12px;
+            vertical-align: middle;
+        }
+        
+        @media screen and (max-width: 840px) {
+            paper-tabs {
+                margin-right: 0px;
+            }
+        }
+        </style>
+        <iron-ajax auto url="/data/page_data.json" handle-as="json" last-response="{{handleResponse}}"></iron-ajax>
+        <iron-media-query query="(min-width: 840px)" query-matches="{{wide}}"></iron-media-query>
+        <app-drawer-layout force-narrow>
+            <template is="dom-if" if="{{!wide}}">
+                <app-drawer id="drawer" swipe-open>
+                    <paper-toolbar class="tall">
+                        <div class="top gcp-logo" flex style="background: url('{{pagecontents.header.drawer_icon_picture}}') no-repeat; background-size: contain;"></div>
+                        <div class="bottom drawer-text">
+                            <div>9:00AM, 30 April</div>
+                            <div>Asia Pacific University, KL</div>
+                        </div>
+                    </paper-toolbar>
+                    <iron-selector attr-for-selected="id" selected="{{data.page}}">
+                        <paper-item id="" drawer-toggle on-tap="scrollTop">Home</paper-item>
+                        <paper-item id="speaker" drawer-toggle on-tap="scrollTop">Speaker</paper-item>
+                        <paper-item id="agenda" drawer-toggle on-tap="scrollTop">Agenda</paper-item>
+                        <paper-item id="getting" drawer-toggle on-tap="scrollTop">Getting There</paper-item>
+                        <paper-item id="register" drawer-toggle on-tap="scrollTop">contents</paper-item>
+                    </iron-selector>
+                </app-drawer>
+            </template>
+            <template is="dom-if" if="{{wide}}">
+                <app-drawer id="drawer" swipe-open>cat</app-drawer>
+            </template>
+            <app-header-layout>
+                <app-header reveals effects="waterfall fade-background">
+                    <app-toolbar wide-layout$="{{wide}}">
+                        <template is="dom-if" if="{{!wide}}">
+                            <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
+                        </template>
+                        <template is="dom-if" if="{{wide}}">
+                            <div on-tap="goHome">
+                                <img src="{{pagecontents.header.toolbar_icon_picture}}" id="gcp-toolbar">
+                            </div>
+                            <div title></div>
+                            <paper-tabs attr-for-selected="id" selected="{{data.page}}">
+                                <paper-tab id="speaker" on-tap="scrollTop">SPEAKER</paper-tab>
+                                <paper-tab id="agenda" on-tap="scrollTop">AGENDA</paper-tab>
+                                <paper-tab id="getting" on-tap="scrollTop">GETTING THERE</paper-tab>
+                                <paper-tab id="register" on-tap="scrollTop">REGISTER</paper-tab>
+                            </paper-tabs>
+                        </template>
+                    </app-toolbar>
+                </app-header>
+                <div>
+                    <carbon-location route="{{route}}"></carbon-location>
+                    <carbon-route route="{{route}}" pattern="/:page" data="{{data}}"></carbon-route>
+                    <neon-animated-pages id="neonAnimatedPages" class="flex" attr-for-selected="id" selected="{{data.page}}">
+                        <home-page id="" page-content="{{pagecontents.details}}"></home-page>
+                        <speaker-page id="speaker"></speaker-page>
+                        <agenda-page id="agenda"></agenda-page>
+                        <transport-page id="getting" page-content="{{pagecontents.getting}}"></transport-page>
+                        <register-page id="register" page-content="{{pagecontents.register}}"></register-page>
+                    </neon-animated-pages>
+                </div>
+            </app-header-layout>
+        </app-drawer-layout>
+        <!-- <platinum-sw-register auto-register></platinum-sw-register> -->
+    </template>
+    <script>
+    Polymer({
+        is: 'app-page',
+        properties: {
+            route: {
+                type: Object,
+                notify: true
+            },
+            data: {
+                type: Object,
+                value: {
+                    page: '/home/'
+                },
+            },
+            handleResponse: {
+                type: Object,
+                notify: true,
+                observer: '_handleResponse'
+            }
+        },
+        _handleResponse: function() {
+            this.pagecontents = this.handleResponse[0];
+        },
+        ready: function() {
+            this.async(function() {
+                if (!this.route.path && this.route.path == "/") {
+                    this.set('route.path', '/');
+                    window.location.hash = "/"
+                }
+            }, 1);
+
+        },
+        goHome: function() {
+            this.set('route.path', '/');
+            document.body.scrollTop = 0
+        },
+        scrollTop: function() {
+            document.body.scrollTop = 0
+        },
+
+        attached: function() {
+            this.async(function() {
+                document.querySelector('neon-animated-pages').addEventListener('neon-animation-finish', function() {
+                    app = document.querySelector('app-page');
+                    if (app.data.page == "") {
+                        console.log("resize")
+                        app.querySelector('google-map').resize();
+                    }
+                });
+            });
+        },
+
+    });
+    </script>
+</dom-module>

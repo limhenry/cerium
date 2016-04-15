@@ -1,0 +1,247 @@
+<dom-module id="speaker-page">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        #speaker_title {
+            max-width: 1250px;
+            width: 100%;
+            display: block;
+            margin: 0 auto;
+            padding-left: 48px;
+            margin-top: 96px;
+            margin-bottom: 36px;
+            font-size: 45px;
+            color: var(--custom-primary-color);
+            font-weight: 400;
+        }
+        
+        paper-card {
+            width: 300px;
+            margin: 12px 6px;
+            line-height: 24px;
+            background: rgba(236, 239, 241, 0.1)
+        }
+        
+        paper-card.card-content {
+            padding: 16px 22px;
+        }
+        
+        #speaker-card {
+            display: block;
+            max-width: 1250px;
+            margin: 0 auto;
+            padding: 8px;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -ms-flex-direction: row;
+            -webkit-flex-direction: row;
+            flex-direction: row;
+            -ms-flex-wrap: wrap;
+            -webkit-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+        
+        #speaker-name {
+            font-weight: 600;
+            margin: 0;
+            font-size: 22px;
+            padding-bottom: 8px;
+        }
+        
+        #speaker-post {
+            margin: 0;
+            line-height: 24px;
+            font-weight: 300;
+        }
+        
+        #speaker-desc {
+            font-size: 16px;
+        }
+        
+        iron-icon {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            right: 0;
+            bottom: -8px;
+            color: #0D47A1;
+            cursor: pointer;
+            -webkit-transition-duration: 0.5s;
+            -moz-transition-duration: 0.5s;
+            -o-transition-duration: 0.5s;
+            transition-duration: 0.5s;
+            -webkit-transition-property: -webkit-transform;
+            -moz-transition-property: -moz-transform;
+            -o-transition-property: -o-transform;
+            transition-property: transform;
+        }
+        
+        iron-icon.active {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+        
+        #speaker-short {
+            position: relative;
+        }
+
+        @media screen and (max-width: 1299px) {
+            #speaker_title {
+                max-width: 948px;
+            }
+            #speaker-card {
+                max-width: 948px;
+            }
+        }
+        
+        @media screen and (max-width: 983px) {
+            #speaker_title {
+                max-width: 632px;
+            }
+            #speaker-card {
+                max-width: 632px;
+            }
+        }
+        
+        @media screen and (max-width: 840px) {
+            #speaker_title {
+                margin-top: 48px;
+                margin-bottom: 24px;
+                font-size: 36px;
+                padding-left: 10px;
+                font-size: 34px;
+            }
+        }
+        
+        @media screen and (max-width: 643px) {
+            #speaker_title {
+                max-width: none;
+                width: 80%;
+            }
+            #speaker-card {
+                max-width: none;
+                padding: 0;
+            }
+            #speaker-post {
+                padding-right: 40px;
+            }
+            paper-card {
+                width: 100%;
+                margin: 0;
+            }
+            #speaker-post {
+                display: inline-block;
+            }
+        }
+        </style>
+        <iron-media-query query="min-width: 643px" query-matches="{{largeScreen}}"></iron-media-query>
+        <iron-ajax auto url="/data/speaker.json" handle-as="json" last-response="{{speakerData}}"></iron-ajax>
+        <div id="speakerPage">
+            <h1 id="speaker_title">Speaker</h1>
+            <div id=speaker-container>
+                <div id="speaker-card">
+                    <template is="dom-repeat" items="{{speakerData}}" id="speaker_dom" on-dom-change="_onDomChange">
+                        <paper-card image="{{item.image}}" class="animatedCard">
+                            <template is="dom-if" if="{{!largeScreen}}">
+                                <div class="card-content">
+                                    <div id="speaker-short">
+                                        <h3 id="speaker-name">[[item.name]]</h3>
+                                        <h3 id="speaker-post"><i>[[item.post]]</i></h3>
+                                        <iron-icon icon="icons:arrow-drop-down" on-click="toggleCollapse"></iron-icon>
+                                    </div>
+                                    <iron-collapse id="collapse">
+                                        <p id="speaker-desc">[[item.desc]]</p>
+                                    </iron-collapse>
+                                </div>
+                            </template>
+                            <template is="dom-if" if="{{largeScreen}}">
+                                <div class="card-content">
+                                    <h3 id="speaker-name">[[item.name]]</h3>
+                                    <h3 id="speaker-post"><i>[[item.post]]</i></h3>
+                                    <p id="speaker-desc">[[item.desc]]</p>
+                                </div>
+                            </template>
+                        </paper-card>
+                    </template>
+                </div>
+            </div>
+        </div>
+        <footer-page></footer-page>
+    </template>
+    <script>
+    Polymer({
+        is: 'speaker-page',
+
+        behaviors: [
+            Polymer.NeonAnimatableBehavior,
+            Polymer.NeonSharedElementAnimatableBehavior,
+            Polymer.NeonAnimationRunnerBehavior
+        ],
+
+        properties: {
+            speakerData: {
+                type: Object,
+                notify: true
+            },
+            animationConfig: {
+                value: function() {
+                    return {
+                        'entry': [{
+                                name: 'cascaded-animation',
+                                animation: 'transform-animation',
+                                transformFrom: 'translateY(100%)',
+                                transformTo: 'none',
+                                timing: {
+                                    delay: 500
+                                }
+                            },{
+                                name: 'fade-in-animation',
+                                node: this,
+                                timing: {
+                                    delay: 400,
+                                    duration: 500
+                                }
+                            }
+                        ],
+                        'exit': [{
+                            name: 'fade-out-animation',
+                            node: this,
+                            timing: {
+                                delay: 100,
+                                duration: 500
+                            }
+                        }, {
+                            name: 'transform-animation',
+                            node: this.$.speakerPage,
+                            transformOrigin: '100%',
+                            transformFrom: 'translateY(0%)',
+                            transformTo: 'translateY(30%)',
+                            timing: {
+                                delay: 100,
+                                duration: 800
+                            }
+                        }],
+                    }
+                }
+            },
+        },
+        _onDomChange: function(){
+            var nodeList = Polymer.dom(this.root).querySelectorAll('.animatedCard');
+            this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+            this.playAnimation('entry');    
+        },
+        toggleCollapse: function(event) {
+            var div = Polymer.dom(event).rootTarget;
+            div.toggleClass('active');
+            div.parentElement.parentElement.querySelector('iron-collapse').toggle();
+        }
+    });
+    </script>
+</dom-module>

@@ -1,0 +1,226 @@
+<dom-module id="transport-page">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        .primary {
+            --paper-card-background-color: var(--custom-primary-color);
+        }
+        
+        .white {
+            --paper-card-background-color: #fff;
+        }
+        
+        .bluegrey {
+            --paper-card-background-color: rgba(236, 239, 241, 0.4);
+        }
+        
+        .shadowElevation:hover {
+            @apply(--shadow-elevation-8dp);
+        }
+        
+        paper-card {
+            max-width: 1600px;
+            width: 80%;
+            margin: 0 auto;
+            display: block;
+            --paper-card-content: {
+                padding: 48px 60px;
+            }
+        }
+        
+        #transport_title {
+            max-width: 1600px;
+            width: 80%;
+            display: block;
+            margin: 0 auto;
+            padding-left: 48px;
+            margin-top: 96px;
+            margin-bottom: 36px;
+            font-size: 45px;
+            color: var(--custom-primary-color);
+            font-weight: 400;
+        }
+        
+        #event-detail {
+            color: rgba(0, 0, 0, 0.7);
+            font-size: 24px;
+            margin-bottom: 68px;
+            line-height: 32px;
+            font-weight: 400;
+        }
+        
+        #event-detail p {
+            margin: 4px;
+        }
+        
+        #event-desc {
+            color: var(--custom-secondary-text-color);
+            font-size: 20px;
+            line-height: 28px;
+            padding: 28px 36px;
+        }
+        
+        #transport-desc {
+            max-width: 700px;
+            color: rgba(0, 0, 0, 0.7);
+            padding: 24px 24px 48px 24px;
+            margin: 0 auto;
+        }
+        
+        #event-desc a {
+            color: rgba(255, 255, 255, 1);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        #transport-desc a {
+            color: #1976D2;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        
+        #transport-desc p {
+            color: #4a4a4a;
+        }
+        
+        #transport-desc h2 {
+            font-size: 30px;
+            font-weight: 400;
+        }
+        
+        #transport-desc h4 {
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 24px;
+            font-weight: 400;
+            margin-top: 48px;
+            margin-bottom: 8px;
+        }
+        
+        #venue_img {
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 80%;
+            display: block;
+        }
+        
+        @media screen and (max-width: 840px) {
+            paper-card {
+                width: 100%;
+            }
+            #venue_img {
+                width: 100%;
+            }
+            #event-desc {
+                padding: 24px 0px;
+                font-size: 18px;
+            }
+            #transport-desc {
+                padding: 0px 12px 0px 12px;
+            }
+            #transport_title {
+                margin-top: 48px;
+                font-size: 36px;
+                padding-left: 10px;
+                font-size: 34px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            paper-card {
+                --paper-card-content: {
+                    padding: 24px 30px;
+                }
+            }
+            #event-detail {
+                margin-bottom: 32px;
+            }
+        }
+        </style>
+        <div id="transportPage">
+            <h1 id="transport_title">Getting There</h1>
+            <paper-card class="primary shadowElevation" animated-shadow>
+                <div class="card-content">
+                    <div id="event-desc">
+                        {{pageContent.getting_description}}
+                    </div>
+                </div>
+            </paper-card>
+            <img src="{{pageContent.venue_photo}}" id="venue_img">
+            <paper-card class="bluegrey">
+                <div class="card-content">
+                    <div id="transport-desc">
+                        <h2>Getting to {{pageContent.venue_name}}</h2>
+                        <p>There are few ways to come to {{pageContent.venue_name}}</p>
+                        <template is="dom-repeat" items="{{pageContent.getting_method}}">
+                            <h4>{{item.method}}</h4>
+                            <p>{{item.method_description}}</p>
+                        </template>
+                    </div>
+                </div>
+            </paper-card>
+            <footer-page></footer-page>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: 'transport-page',
+
+        behaviors: [
+            Polymer.NeonAnimatableBehavior,
+            Polymer.NeonAnimationRunnerBehavior
+        ],
+
+        properties: {
+            pageContent: Object,
+            animationConfig: {
+                value: function() {
+                    return {
+                        'entry': [{
+                            name: 'fade-in-animation',
+                            node: this,
+                            timing: {
+                                delay: 400,
+                                duration: 500
+                            }
+                        }, {
+                            name: 'transform-animation',
+                            node: this.$.transportPage,
+                            transformOrigin: '100%',
+                            transformFrom: 'translateY(30%)',
+                            transformTo: 'translateY(0%)',
+                            timing: {
+                                delay: 200,
+                                duration: 800
+                            }
+                        }],
+                        'exit': [{
+                            name: 'fade-out-animation',
+                            node: this,
+                            timing: {
+                                delay: 100,
+                                duration: 500
+                            }
+                        }, {
+                            name: 'transform-animation',
+                            node: this.$.transportPage,
+                            transformOrigin: '100%',
+                            transformFrom: 'translateY(0%)',
+                            transformTo: 'translateY(30%)',
+                            timing: {
+                                delay: 100,
+                                duration: 800
+                            }
+                        }],
+                    }
+                }
+            },
+        },
+        ready: function() {
+            this.playAnimation('entry');
+        }
+    });
+    </script>
+</dom-module>
