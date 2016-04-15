@@ -24,6 +24,11 @@
  - Push Notification
  - Offline support
 
+## Where to Start
+ - Open `public/data/page_data.json` to edit website content
+ - Open `public/data/speaker.json` to edit speakers information
+ - Open `public/src/app-page.html` line 8 to line 13 to change the website color
+
 ## Who is using Project Cerium?
 Going to use this template? JUST DO IT!	Go on! The only thing we ask - [let me know](https://twitter.com/henrylim96) so I can include you to this list, or make a pull request.
 
