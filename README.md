@@ -1,6 +1,6 @@
 # Project Cerium
-[Live Demo](https://gcpnextkl2016.appspot.com/)
-[Live Demo](https://io16mmu.appspot.com/)
+![Imgur](http://i.imgur.com/jMjQCUK.png)
+![Imgur](http://i.imgur.com/2Cuswrm.png)
 
 ## Features
  - Material Design
