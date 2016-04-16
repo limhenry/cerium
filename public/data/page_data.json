@@ -3,6 +3,21 @@
         "toolbar_icon_picture": "https://placehold.it/200x100/ffffff/0D47A1?text=logo",
         "drawer_icon_picture": "https://placehold.it/350x250/0D47A1/ffffff?text=logo"
     },
+    "menu":{
+      "home": "HOME",
+      "speakers": "SPEAKERS",
+      "agenda":"AGENDA",
+      "getting": "GETTING THERE",
+      "register": "REGISTER"
+    },
+    "movil-menu":{
+      "home": "Home",
+      "speakers": "Speakers",
+      "agenda": "Agenda",
+      "getting": "Getting there",
+      "register": "contents"
+    },
+
     "details": {
         "time": "event_date_&_time",
         "location": "venue_location",

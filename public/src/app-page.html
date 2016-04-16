@@ -4,7 +4,7 @@
         <style>
         :host {
             display: block;
-            
+
             --paper-tab-ink: #5c6bc0;
             --custom-primary-color: #4DD0E1;
             --custom-secondary-color: #5c6bc0;
@@ -12,25 +12,25 @@
             --custom-secondary-text-color: rgba(0,0,0,0.9);
             --custom-invert-text-color: rgba(255,255,255,0.9);
         }
-        
+
         paper-tabs {
             margin-right: 24px;
             --paper-tabs-selection-bar-color: var(--custom-secondary-color);
             height: 64px;
         }
-        
+
         paper-tab {
             color: var(--custom-secondary-color);
             font-weight: 500;
         }
-        
+
         app-header {
             background-color: white;
             --app-header-background-rear-layer: {
                 background-color: #FAFAFA;
             }
         }
-        
+
         .gcp-logo {
             display: inline-block;
             height: 40px;
@@ -38,19 +38,19 @@
             transition: opacity 200ms ease-in-out;
             will-change: opacity;
         }
-        
+
         .drawer-text {
             font-size: 14px;
             line-height: 20px;
             color: white;
             font-weight: 500;
         }
-        
+
         paper-toolbar {
             background: var(--custom-primary-color);
             margin-bottom: 8px;
         }
-        
+
         paper-item {
             font-size: 14px;
             color: var(--custom-primary-color);
@@ -60,7 +60,7 @@
                 background: #eceff1;
             }
         }
-        
+
         #gcp-toolbar {
             background-size: contain;
             cursor: pointer;
@@ -68,7 +68,7 @@
             margin-left: 12px;
             vertical-align: middle;
         }
-        
+
         @media screen and (max-width: 840px) {
             paper-tabs {
                 margin-right: 0px;
@@ -88,11 +88,11 @@
                         </div>
                     </paper-toolbar>
                     <iron-selector attr-for-selected="id" selected="{{data.page}}">
-                        <paper-item id="" drawer-toggle on-tap="scrollTop">Home</paper-item>
-                        <paper-item id="speaker" drawer-toggle on-tap="scrollTop">Speaker</paper-item>
-                        <paper-item id="agenda" drawer-toggle on-tap="scrollTop">Agenda</paper-item>
-                        <paper-item id="getting" drawer-toggle on-tap="scrollTop">Getting There</paper-item>
-                        <paper-item id="register" drawer-toggle on-tap="scrollTop">contents</paper-item>
+                        <paper-item id="" drawer-toggle on-tap="scrollTop">{{pagecontents.movil-menu.home}}</paper-item>
+                        <paper-item id="speaker" drawer-toggle on-tap="scrollTop">{{pagecontents.movil-menu.speakers}}</paper-item>
+                        <paper-item id="agenda" drawer-toggle on-tap="scrollTop">{{pagecontents.movil-menu.agenda}}</paper-item>
+                        <paper-item id="getting" drawer-toggle on-tap="scrollTop">{{pagecontents.movil-menu.getting}}</paper-item>
+                        <paper-item id="register" drawer-toggle on-tap="scrollTop">{{pagecontents.movil-menu.register}}</paper-item>
                     </iron-selector>
                 </app-drawer>
             </template>
@@ -111,10 +111,11 @@
                             </div>
                             <div title></div>
                             <paper-tabs attr-for-selected="id" selected="{{data.page}}">
-                                <paper-tab id="speaker" on-tap="scrollTop">SPEAKER</paper-tab>
-                                <paper-tab id="agenda" on-tap="scrollTop">AGENDA</paper-tab>
-                                <paper-tab id="getting" on-tap="scrollTop">GETTING THERE</paper-tab>
-                                <paper-tab id="register" on-tap="scrollTop">REGISTER</paper-tab>
+                                <paper-tab id="" on-tap="scrollTop">{{pagecontents.menu.home}}</paper-tab>
+                                <paper-tab id="speaker" on-tap="scrollTop">{{pagecontents.menu.speakers}}</paper-tab>
+                                <paper-tab id="agenda" on-tap="scrollTop">{{pagecontents.menu.agenda}}</paper-tab>
+                                <paper-tab id="getting" on-tap="scrollTop">{{pagecontents.menu.getting}}</paper-tab>
+                                <paper-tab id="register" on-tap="scrollTop">{{pagecontents.menu.register}}</paper-tab>
                             </paper-tabs>
                         </template>
                     </app-toolbar>
