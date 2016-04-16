@@ -1,0 +1,7 @@
+[
+{"start": "10:45PM, 18 May", "end": "11:00PM", "name": "Doors Open", "place":"FCI Lecture Hall"},
+{"start": "11:00PM", "end": "11:15PM", "name": "Registration &amp; Check In", "place":"FCI Lecture Hall"},
+{"start": "11:15PM", "end": "12:00AM", "name": "Pizza Party &amp; Network", "place":"FCI Lecture Hall"},
+{"start": "12:00AM, 19 May *", "end": "3:00AM", "name": "Keynote Live Stream", "place":"FCI Lecture Hall"},
+{"start": "3:00AM *", "end": "3:30AM" , "name": "Closing and Depature", "place":"FCI Lecture Hall"}
+]

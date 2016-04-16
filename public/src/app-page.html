@@ -125,8 +125,8 @@
                     <carbon-route route="{{route}}" pattern="/:page" data="{{data}}"></carbon-route>
                     <neon-animated-pages id="neonAnimatedPages" class="flex" attr-for-selected="id" selected="{{data.page}}">
                         <home-page id="" page-content="{{pagecontents.details}}"></home-page>
-                        <speaker-page id="speaker"></speaker-page>
-                        <agenda-page id="agenda"></agenda-page>
+                        <speaker-page page-content="{{pagecontents.speaker}}" id="speaker"></speaker-page>
+                        <agenda-page id="agenda" page-content="{{pagecontents.agenda}}"></agenda-page>
                         <transport-page id="getting" page-content="{{pagecontents.getting}}"></transport-page>
                         <register-page id="register" page-content="{{pagecontents.register}}"></register-page>
                     </neon-animated-pages>

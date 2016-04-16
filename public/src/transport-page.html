@@ -4,23 +4,23 @@
         :host {
             display: block;
         }
-        
+
         .primary {
             --paper-card-background-color: var(--custom-primary-color);
         }
-        
+
         .white {
             --paper-card-background-color: #fff;
         }
-        
+
         .bluegrey {
             --paper-card-background-color: rgba(236, 239, 241, 0.4);
         }
-        
+
         .shadowElevation:hover {
             @apply(--shadow-elevation-8dp);
         }
-        
+
         paper-card {
             max-width: 1600px;
             width: 80%;
@@ -30,7 +30,7 @@
                 padding: 48px 60px;
             }
         }
-        
+
         #transport_title {
             max-width: 1600px;
             width: 80%;
@@ -43,7 +43,7 @@
             color: var(--custom-primary-color);
             font-weight: 400;
         }
-        
+
         #event-detail {
             color: rgba(0, 0, 0, 0.7);
             font-size: 24px;
@@ -51,46 +51,46 @@
             line-height: 32px;
             font-weight: 400;
         }
-        
+
         #event-detail p {
             margin: 4px;
         }
-        
+
         #event-desc {
             color: var(--custom-secondary-text-color);
             font-size: 20px;
             line-height: 28px;
             padding: 28px 36px;
         }
-        
+
         #transport-desc {
             max-width: 700px;
             color: rgba(0, 0, 0, 0.7);
             padding: 24px 24px 48px 24px;
             margin: 0 auto;
         }
-        
+
         #event-desc a {
             color: rgba(255, 255, 255, 1);
             font-weight: 500;
             text-decoration: none;
         }
-        
+
         #transport-desc a {
             color: #1976D2;
             font-weight: 500;
             text-decoration: none;
         }
-        
+
         #transport-desc p {
             color: #4a4a4a;
         }
-        
+
         #transport-desc h2 {
             font-size: 30px;
             font-weight: 400;
         }
-        
+
         #transport-desc h4 {
             color: rgba(0, 0, 0, 0.6);
             font-size: 24px;
@@ -98,14 +98,14 @@
             margin-top: 48px;
             margin-bottom: 8px;
         }
-        
+
         #venue_img {
             max-width: 1600px;
             margin: 0 auto;
             width: 80%;
             display: block;
         }
-        
+
         @media screen and (max-width: 840px) {
             paper-card {
                 width: 100%;
@@ -127,7 +127,7 @@
                 font-size: 34px;
             }
         }
-        
+
         @media screen and (max-width: 480px) {
             paper-card {
                 --paper-card-content: {
@@ -140,7 +140,7 @@
         }
         </style>
         <div id="transportPage">
-            <h1 id="transport_title">Getting There</h1>
+            <h1 id="transport_title">{{pageContent.title}}</h1>
             <paper-card class="primary shadowElevation" animated-shadow>
                 <div class="card-content">
                     <div id="event-desc">
@@ -152,8 +152,8 @@
             <paper-card class="bluegrey">
                 <div class="card-content">
                     <div id="transport-desc">
-                        <h2>Getting to {{pageContent.venue_name}}</h2>
-                        <p>There are few ways to come to {{pageContent.venue_name}}</p>
+                        <h2>{{pageContent.getting-to}} {{pageContent.venue_name}}</h2>
+                        <p>{{pageContent.there-are-ways}} {{pageContent.venue_name}}</p>
                         <template is="dom-repeat" items="{{pageContent.getting_method}}">
                             <h4>{{item.method}}</h4>
                             <p>{{item.method_description}}</p>
