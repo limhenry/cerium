@@ -4,7 +4,7 @@
         :host {
             display: block;
         }
-        
+
         #agenda {
             max-width: 1600px;
             width: 80%;
@@ -17,14 +17,14 @@
             color: var(--custom-primary-color);
             font-weight: 400;
         }
-        
+
         #container {
             max-width: 1600px;
             display: block;
             margin: 0 auto;
             width: 80%;
         }
-        
+
         paper-card {
             width: 100%;
             background: #FAFAFA;
@@ -32,29 +32,29 @@
             margin-bottom: 32px;
             border-top: 3px solid #5C6BC0;
         }
-        
+
         paper-card:hover {
             @apply(--shadow-elevation-4dp);
         }
-        
+
         #event_time {
             color: rgba(0, 0, 0, 0.5);
             margin-bottom: 12px;
             margin-left: 4px;
             vertical-align: middle;
         }
-        
+
         #event_title {
             color: rgba(0, 0, 0, 0.7);
             font-size: 22px;
             font-weight: 400;
         }
-        
+
         #event_desc_block iron-icon {
             color: rgba(0, 0, 0, 0.5);
             margin-right: 2px;
         }
-        
+
         #event_desc_block {
             display: inline-block;
             margin-right: 4px;
@@ -62,14 +62,14 @@
             font-size: 14px;
             font-weight: 300;
         }
-        
+
         #toChange {
             padding-top: 12px;
             font-size: 14px;
             font-weight: 400;
             color: rgba(0, 0, 0, 0.7);
         }
-        
+
         @media screen and (max-width: 840px) {
             paper-card {
                 border-top: 0 solid;
@@ -94,16 +94,11 @@
             }
         }
         </style>
+        <iron-ajax auto url="/data/agenda.json" handle-as="json" last-response="{{agendaData}}"></iron-ajax>
         <div id="agendaCard">
-            <h1 id="agenda">Agenda</h1>
+            <h1 id="agenda">{{pageContent.title}}</h1>
             <div id="container">
-                <template is="dom-repeat" as="item" items='[
-						{"start": "10:45PM, 18 May", "end": "11:00PM", "name": "Doors Open"}, 
-						{"start": "11:00PM", "end": "11:15PM", "name": "Registration &amp; Check In"}, 
-						{"start": "11:15PM", "end": "12:00AM", "name": "Pizza Party &amp; Network"},
-						{"start": "12:00AM, 19 May *", "end": "3:00AM", "name": "Keynote Live Stream"}, 
-						{"start": "3:00AM *", "end": "3:30AM" , "name": "Closing and Depature"}
-					]'>
+                <template is="dom-repeat" as="item" items='[[agendaData]]'>
                     <div id="event_time">
                         <iron-icon icon="device:access-time"></iron-icon>
                         [[item.start]]
@@ -115,12 +110,12 @@
                                 <iron-icon icon="icons:history"></iron-icon>[[item.end]]
                             </div>
                             <div id="event_desc_block">
-                                <iron-icon icon="maps:place"></iron-icon>FCI Lecture Hall
+                                <iron-icon icon="maps:place"></iron-icon>[[item.place]]
                             </div>
                         </p>
                     </paper-card>
                 </template>
-                <p id="toChange">* Subject to change</p>
+                <p id="toChange">{{pageContent.tochange}}</p>
             </div>
             <footer-page></footer-page>
         </div>
@@ -128,13 +123,17 @@
     <script>
     Polymer({
         is: 'agenda-page',
-
+        pageContent:Object,
         behaviors: [
             Polymer.NeonAnimatableBehavior,
             Polymer.NeonAnimationRunnerBehavior
         ],
 
         properties: {
+          agendaData: {
+              type: Object,
+              notify: true
+          },
             animationConfig: {
                 value: function() {
                     return {

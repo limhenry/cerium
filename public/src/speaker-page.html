@@ -4,7 +4,7 @@
         :host {
             display: block;
         }
-        
+
         #speaker_title {
             max-width: 1250px;
             width: 100%;
@@ -17,18 +17,18 @@
             color: var(--custom-primary-color);
             font-weight: 400;
         }
-        
+
         paper-card {
             width: 300px;
             margin: 12px 6px;
             line-height: 24px;
             background: rgba(236, 239, 241, 0.1)
         }
-        
+
         paper-card.card-content {
             padding: 16px 22px;
         }
-        
+
         #speaker-card {
             display: block;
             max-width: 1250px;
@@ -44,24 +44,24 @@
             -webkit-flex-wrap: wrap;
             flex-wrap: wrap;
         }
-        
+
         #speaker-name {
             font-weight: 600;
             margin: 0;
             font-size: 22px;
             padding-bottom: 8px;
         }
-        
+
         #speaker-post {
             margin: 0;
             line-height: 24px;
             font-weight: 300;
         }
-        
+
         #speaker-desc {
             font-size: 16px;
         }
-        
+
         iron-icon {
             width: 40px;
             height: 40px;
@@ -79,7 +79,7 @@
             -o-transition-property: -o-transform;
             transition-property: transform;
         }
-        
+
         iron-icon.active {
             -webkit-transform: rotate(180deg);
             -moz-transform: rotate(180deg);
@@ -87,7 +87,7 @@
             -o-transform: rotate(180deg);
             transform: rotate(180deg);
         }
-        
+
         #speaker-short {
             position: relative;
         }
@@ -100,7 +100,7 @@
                 max-width: 948px;
             }
         }
-        
+
         @media screen and (max-width: 983px) {
             #speaker_title {
                 max-width: 632px;
@@ -109,7 +109,7 @@
                 max-width: 632px;
             }
         }
-        
+
         @media screen and (max-width: 840px) {
             #speaker_title {
                 margin-top: 48px;
@@ -119,7 +119,7 @@
                 font-size: 34px;
             }
         }
-        
+
         @media screen and (max-width: 643px) {
             #speaker_title {
                 max-width: none;
@@ -144,7 +144,7 @@
         <iron-media-query query="min-width: 643px" query-matches="{{largeScreen}}"></iron-media-query>
         <iron-ajax auto url="/data/speaker.json" handle-as="json" last-response="{{speakerData}}"></iron-ajax>
         <div id="speakerPage">
-            <h1 id="speaker_title">Speaker</h1>
+            <h1 id="speaker_title">{{pageContent.title}}</h1>
             <div id=speaker-container>
                 <div id="speaker-card">
                     <template is="dom-repeat" items="{{speakerData}}" id="speaker_dom" on-dom-change="_onDomChange">
@@ -178,6 +178,7 @@
     <script>
     Polymer({
         is: 'speaker-page',
+        pageContent: Object,
 
         behaviors: [
             Polymer.NeonAnimatableBehavior,
@@ -235,7 +236,7 @@
         _onDomChange: function(){
             var nodeList = Polymer.dom(this.root).querySelectorAll('.animatedCard');
             this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
-            this.playAnimation('entry');    
+            this.playAnimation('entry');
         },
         toggleCollapse: function(event) {
             var div = Polymer.dom(event).rootTarget;

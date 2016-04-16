@@ -3,6 +3,21 @@
         "toolbar_icon_picture": "https://placehold.it/200x100/ffffff/0D47A1?text=logo",
         "drawer_icon_picture": "https://placehold.it/350x250/0D47A1/ffffff?text=logo"
     },
+    "menu":{
+      "home": "HOME",
+      "speakers": "SPEAKERS",
+      "agenda":"AGENDA",
+      "getting": "GETTING THERE",
+      "register": "REGISTER"
+    },
+    "movil-menu":{
+      "home": "Home",
+      "speakers": "Speakers",
+      "agenda": "Agenda",
+      "getting": "Getting there",
+      "register": "contents"
+    },
+
     "details": {
         "time": "event_date_&_time",
         "location": "venue_location",
@@ -14,6 +29,10 @@
         "venue_pointer_latitude": "37.77493",
         "venue_pointer_longitude": "-122.41942",
         "peatix_event_url": "https://gcpnextkl2016.peatix.com",
+        "get-ticket": "Get your ticket now on Peatix",
+        "button-get-ticket": "Book now",
+        "organized-by":"Organized by",
+        "made-possible-with":"Made possible with",
         "sponsor": "/data/images/google.png",
         "co-sponsor": [{
             "sponsor_image": "/data/images/google.png"
@@ -29,11 +48,21 @@
             "sponsor_image": "/data/images/google.png"
         }]
     },
+    "speaker": {
+      "title":"Speakers"
+    },
+    "agenda":{
+      "title":"Agenda",
+      "tochange":"* Subject to change"
+    },
     "getting": {
+        "title": "Getting there",
         "event_name": "your_event_name",
         "getting_description": "getting_there_description",
         "venue_name": "your_event_venue",
         "venue_photo": "https://placehold.it/1280x640/eeeeee/0D47A1?text=venue+photo",
+        "getting-to": "Getting to",
+        "there-are-ways":"There are few ways to come to",
         "getting_method": [{
             "method": "Lorem ipsum",
             "method_description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus aliquet lectus arcu, id mollis nunc ullamcorper vel. Donec placerat urna vel suscipit blandit. Proin sit amet iaculis nibh. In hac habitasse platea dictumst."
@@ -49,6 +78,7 @@
         }]
     },
     "register": {
+        "title": "Register",
         "peatix_iframe_url": "https://peatix.com/event/162445/share/widget?z=1&t=1"
     },
     "footer": {
